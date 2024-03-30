@@ -2,6 +2,7 @@ package com.mcstaralliance.netherpassport.util;
 
 import com.mcstaralliance.netherpassport.NetherPassport;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,6 +33,7 @@ public class NetherPassportUtil {
             int z = config.getInt("nether.spawn.z");
             Location netherSpawn = new Location(nether, x, y, z);
             player.teleport(netherSpawn);
+            player.sendMessage(ChatColor.GREEN + "下界通行证使用成功，你已被传送至下界。");
         }
     }
 

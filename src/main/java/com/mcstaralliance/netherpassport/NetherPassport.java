@@ -2,6 +2,8 @@ package com.mcstaralliance.netherpassport;
 
 import com.mcstaralliance.netherpassport.command.DebugCommand;
 import com.mcstaralliance.netherpassport.listener.PlayerInteractListener;
+import com.mcstaralliance.netherpassport.listener.PlayerPortalListener;
+import com.mcstaralliance.netherpassport.listener.PlayerTeleportListener;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -30,6 +32,8 @@ public final class NetherPassport extends JavaPlugin {
         instance = this;
         saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerPortalListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerTeleportListener(), this);
         Bukkit.getPluginCommand("np").setExecutor(new DebugCommand());
     }
 
