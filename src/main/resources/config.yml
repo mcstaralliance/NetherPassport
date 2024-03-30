@@ -1,0 +1,10 @@
+# configure your nether passport id here.
+nether-passport-id: 'KUBEJS_ITEM_41'
+# 灵活命名
+debug: false
+nether:
+  name: 'DIM-1'
+  spawn:
+    x: 0
+    y: 64
+    z: 0

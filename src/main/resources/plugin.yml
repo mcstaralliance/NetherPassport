@@ -1,0 +1,8 @@
+name: NetherPassport
+version: '${project.version}'
+main: com.mcstaralliance.netherpassport.NetherPassport
+api-version: '1.18'
+depend:
+  - LuckPerms
+commands:
+  np:
