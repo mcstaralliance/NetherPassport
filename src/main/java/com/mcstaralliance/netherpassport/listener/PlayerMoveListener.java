@@ -27,7 +27,7 @@ public class PlayerMoveListener implements Listener {
             case 1:
                 return;
             case 2:
-                if (NetherPassportUtil.isPermittedPlayer(player)) {
+                if (!NetherPassportUtil.isPermittedPlayer(player)) {
                     player.teleport(NetherPassportUtil.getSpawnLocation());
                     player.sendMessage(ChatColor.RED + "你的下界通行证已到期。");
                 }
