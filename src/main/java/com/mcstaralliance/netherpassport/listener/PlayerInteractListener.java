@@ -15,25 +15,21 @@ public class PlayerInteractListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (NetherPassportUtil.isDebugging()) {
-            Player player = event.getPlayer();
-            ItemStack item = event.getItem();
-            player.sendMessage("ItemStack Type:" + item.getType());
+            NetherPassportUtil.sendDebugMessage(event.getPlayer());
         }
+
         // 非必要不执行
         if (!event.getAction().toString().contains("RIGHT_CLICK")) {
             return;
         }
+
         Player player = event.getPlayer();
-        String item = String.valueOf(player.getInventory().getItemInMainHand().getType());
-        FileConfiguration config = plugin.getConfig();
-        String passport = config.getString("nether-passport-id");
-        if (!item.equalsIgnoreCase(passport)) {
+        String item = String.valueOf(event.getItem().getType());
+        if (!NetherPassportUtil.isPassport(item)) {
             return;
         }
-        int slot = player.getInventory().getHeldItemSlot();
 
-        // take the passport away.
-        player.getInventory().setItem(slot, null);
+        NetherPassportUtil.takeAwayPassport(player);
         NetherPassportUtil.permitPlayer(player);
         NetherPassportUtil.transport(player);
     }

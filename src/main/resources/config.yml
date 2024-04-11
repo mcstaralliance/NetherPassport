@@ -2,9 +2,20 @@
 nether-passport-id: 'KUBEJS_ITEM_41'
 # 灵活命名
 debug: false
+usage:
+  method: 1
+  time: 30
+# 用法 1：使用一个下界通行证，去一次下界，不限时间，5 分钟内往返自然，离开后无法返回
+# 用法 2：使用一个下界通行证，前往下界，`time` 分钟内往返自然，可叠加使用
 nether:
-  name: 'DIM-1'
+  name: 'world/DIM-1'
   spawn:
     x: 0
     y: 64
     z: 0
+# 主城出生点
+spawn:
+  name: world_capital
+  x: 0
+  y: 64
+  z: 0
