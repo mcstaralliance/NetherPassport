@@ -3,8 +3,6 @@ package com.mcstaralliance.netherpassport.listener;
 import com.mcstaralliance.netherpassport.NetherPassport;
 import com.mcstaralliance.netherpassport.util.NetherPassportUtil;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +11,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerMoveListener implements Listener {
     NetherPassport plugin = NetherPassport.getInstance();
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
@@ -30,11 +29,9 @@ public class PlayerMoveListener implements Listener {
             case 2:
                 if (NetherPassportUtil.isPermittedPlayer(player)) {
                     player.teleport(NetherPassportUtil.getSpawnLocation());
-                    return;
+                    player.sendMessage(ChatColor.RED + "你的下界通行证已到期。");
                 }
-        player.sendMessage(ChatColor.RED + "你的下界通行证已到期。");
-        event.setCancelled(true);
-    }
+        }
     }
 
 }
