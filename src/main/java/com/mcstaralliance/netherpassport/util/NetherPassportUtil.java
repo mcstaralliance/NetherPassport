@@ -9,6 +9,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class NetherPassportUtil {
@@ -38,16 +41,36 @@ public class NetherPassportUtil {
     public static void transport(Player player) {
         // transport your dear player.
         FileConfiguration config = plugin.getConfig();
+        player.teleport(getNetherLocation());
+        int method = config.getInt("usage.method");
+        int minute = config.getInt("usage.time");
+        switch (method) {
+            case 1:
+                player.sendMessage(ChatColor.GREEN + "下界通行证使用成功，你已被传送至下界。");
+                break;
+            case 2:
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                LocalTime newTime = LocalTime.now().plusMinutes(minute);
+                String formattedTime = newTime.format(formatter);
+                String message = "下界通行证使用成功，你已被传送至下界。" + formattedTime + " 以前可以无限次往返。";
+                player.sendMessage(ChatColor.GREEN + message);
+                break;
+        }
+    }
+
+    public static Location getNetherLocation() {
+        FileConfiguration config = plugin.getConfig();
         String netherName = config.getString("nether.name");
         World nether = Bukkit.getServer().getWorld(netherName);
-        if (nether != null) {
-            int x = config.getInt("nether.spawn.x");
-            int y = config.getInt("nether.spawn.y");
-            int z = config.getInt("nether.spawn.z");
-            Location netherSpawn = new Location(nether, x, y, z);
-            player.teleport(netherSpawn);
-            player.sendMessage(ChatColor.GREEN + "下界通行证使用成功，你已被传送至下界。");
+        if (nether == null) {
+            plugin.getLogger().warning("获取下界世界失败，返回出生点位置。");
+            return getSpawnLocation();
         }
+        int x = config.getInt("nether.spawn.x");
+        int y = config.getInt("nether.spawn.y");
+        int z = config.getInt("nether.spawn.z");
+
+        return new Location(nether, x, y, z);
     }
 
     public static boolean isDebugging() {
