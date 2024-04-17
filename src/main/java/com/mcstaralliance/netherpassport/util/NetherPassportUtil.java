@@ -1,6 +1,7 @@
 package com.mcstaralliance.netherpassport.util;
 
 import com.mcstaralliance.netherpassport.NetherPassport;
+import com.mcstaralliance.netherpassport.task.BossBarTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -9,7 +10,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +34,27 @@ public class NetherPassportUtil {
         }
     }
 
+    public static void showBossBar(Player player) {
+        FileConfiguration config = plugin.getConfig();
+        int method = config.getInt("usage.method");
+        if (method != 2) {
+            return;
+        }
+        BossBarTask task = new BossBarTask(player);
+        task.runTaskTimer(plugin, 0, 20 * 60);
+    }
+
+    public static String getPassportExpirationTime(Player player) {
+        long millis = LuckPermsUtil.getExpirationTime(player, NETHER_PASSPORT_PERMISSION);
+        if (millis == 0 || millis == -1) {
+            return "Invalid Time";
+        }
+        LocalTime time = LocalTime.ofSecondOfDay(millis / 1000);
+        // 毫秒转换为秒
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return time.format(formatter);
+    }
+
     public static boolean isPermittedPlayer(Player player) {
         return player.hasPermission(NETHER_PASSPORT_PERMISSION);
     }
@@ -49,15 +70,17 @@ public class NetherPassportUtil {
                 player.sendMessage(ChatColor.GREEN + "下界通行证使用成功，你已被传送至下界。");
                 break;
             case 2:
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                LocalTime newTime = LocalTime.now().plusMinutes(minute);
-                String formattedTime = newTime.format(formatter);
-                String message = "下界通行证使用成功，你已被传送至下界。" + formattedTime + " 以前可以无限次往返。";
+                String time = getFormattedTimeAfterMinutes(minute);
+                String message = "下界通行证使用成功，你已被传送至下界。" + time + " 以前可以无限次往返。";
                 player.sendMessage(ChatColor.GREEN + message);
                 break;
         }
     }
-
+    public static String getFormattedTimeAfterMinutes(int minutes) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime newTime = LocalTime.now().plusMinutes(minutes);
+        return newTime.format(formatter);
+    }
     public static Location getNetherLocation() {
         FileConfiguration config = plugin.getConfig();
         String netherName = config.getString("nether.name");

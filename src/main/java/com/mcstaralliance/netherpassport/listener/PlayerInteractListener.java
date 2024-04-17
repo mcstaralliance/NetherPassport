@@ -22,8 +22,11 @@ public class PlayerInteractListener implements Listener {
         if (!event.getAction().toString().contains("RIGHT_CLICK")) {
             return;
         }
-
+    
         Player player = event.getPlayer();
+        if (event.getItem().getType() == null) {
+            return;
+        } 
         String item = String.valueOf(event.getItem().getType());
         if (!NetherPassportUtil.isPassport(item)) {
             return;
@@ -32,5 +35,6 @@ public class PlayerInteractListener implements Listener {
         NetherPassportUtil.takeAwayPassport(player);
         NetherPassportUtil.permitPlayer(player);
         NetherPassportUtil.transport(player);
+        NetherPassportUtil.showBossBar(player);
     }
 }
