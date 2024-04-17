@@ -10,21 +10,15 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class BossBarTask extends BukkitRunnable {
     private final NetherPassport plugin = NetherPassport.getInstance();
-    private static final HashMap<UUID, BossBar> bars = new HashMap<>();
     private final FileConfiguration config = plugin.getConfig();
     private BossBar bar;
     private int totalTime;
     private int remainingTime;
     private String expirationTime;
-    private Player player;
 
     public BossBarTask(Player player) {
-        this.player = player;
         this.totalTime = config.getInt("usage.time");
         this.remainingTime = totalTime;
         this.expirationTime = NetherPassportUtil.getPassportExpirationTime(player);
@@ -32,7 +26,6 @@ public class BossBarTask extends BukkitRunnable {
         this.bar = plugin.getServer().createBossBar("下界通行证将在 " + expirationTime + " 后失效", BarColor.RED, BarStyle.SOLID);
         this.bar.setVisible(true);
         this.bar.addPlayer(player);
-        bars.put(player.getUniqueId(), this.bar);
     }
 
     @Override
@@ -44,7 +37,6 @@ public class BossBarTask extends BukkitRunnable {
         } else {
             bar.setVisible(false);
             bar.removeAll();
-            bars.remove(player.getUniqueId()); // 任务完成后从HashMap中移除
             cancel();
             return;
         }

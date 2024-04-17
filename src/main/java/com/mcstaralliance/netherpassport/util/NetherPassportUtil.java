@@ -10,7 +10,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
@@ -49,8 +52,9 @@ public class NetherPassportUtil {
         if (millis == 0 || millis == -1) {
             return "Invalid Time";
         }
-        LocalTime time = LocalTime.ofSecondOfDay(millis / 1000);
-        // 毫秒转换为秒
+        Instant instant = Instant.ofEpochMilli(millis);
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalTime time = localDateTime.toLocalTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return time.format(formatter);
     }
@@ -60,7 +64,6 @@ public class NetherPassportUtil {
     }
 
     public static void transport(Player player) {
-        // transport your dear player.
         FileConfiguration config = plugin.getConfig();
         player.teleport(getNetherLocation());
         int method = config.getInt("usage.method");
