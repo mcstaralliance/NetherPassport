@@ -1,13 +1,12 @@
 package com.mcstaralliance.netherpassport.listener;
 
 import com.mcstaralliance.netherpassport.NetherPassport;
+import com.mcstaralliance.netherpassport.util.LuckPermsUtil;
 import com.mcstaralliance.netherpassport.util.NetherPassportUtil;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteractListener implements Listener {
     NetherPassport plugin = NetherPassport.getInstance();
@@ -28,7 +27,14 @@ public class PlayerInteractListener implements Listener {
             return;
         } 
         String item = String.valueOf(event.getItem().getType());
+
         if (!NetherPassportUtil.isPassport(item)) {
+            return;
+        }
+        if (NetherPassportUtil.isPermanentPassport(item)) {
+            NetherPassportUtil.takeAwayPassport(player);
+            LuckPermsUtil.addPermission(player, NetherPassportUtil.NETHER_PASSPORT_PERMISSION);
+            NetherPassportUtil.transport(player);
             return;
         }
 

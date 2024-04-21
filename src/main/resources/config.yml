@@ -19,3 +19,6 @@ spawn:
   x: 0
   y: 64
   z: 0
+permanent-passport:
+  # 如果不需要启用此功能，id 填一个不存在的物品即可
+  id: 'KUBEJS_PERMANENT_PASSPORT'

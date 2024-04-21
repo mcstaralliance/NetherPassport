@@ -110,6 +110,12 @@ public class NetherPassportUtil {
         return passport.equalsIgnoreCase(item);
     }
 
+    public static boolean isPermanentPassport(String item) {
+        FileConfiguration config = plugin.getConfig();
+        String passport = config.getString("permanent-passport.id");
+        return passport.equalsIgnoreCase(item);
+    }
+
     public static void takeAwayPassport(Player player) {
         int slot = player.getInventory().getHeldItemSlot();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -130,6 +136,6 @@ public class NetherPassportUtil {
         final int y = config.getInt("spawn.y");
         final int z = config.getInt("spawn.z");
         return new Location(world, x, y, z);
-
     }
+
 }

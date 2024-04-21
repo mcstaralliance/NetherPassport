@@ -5,11 +5,8 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class LuckPermsUtil {
@@ -25,7 +22,15 @@ public class LuckPermsUtil {
             api.getUserManager().saveUser(user);
         }
     }
-
+    public static void addPermission(Player player, String permission) {
+        User user = api.getUserManager().getUser(player.getUniqueId());
+        if (user != null) {
+            // 创建权限节点
+            Node node = Node.builder(permission).value(true).build();
+            user.data().add(node);
+            api.getUserManager().saveUser(user);
+        }
+    }
     public static long getExpirationTime(Player player, String permission) {
         User user = api.getUserManager().getUser(player.getUniqueId());
         if (user != null) {
