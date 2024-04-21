@@ -23,9 +23,9 @@ public class PlayerInteractListener implements Listener {
         }
     
         Player player = event.getPlayer();
-        if (event.getItem().getType() == null) {
+        if (event.getItem() == null) {
             return;
-        } 
+        }
         String item = String.valueOf(event.getItem().getType());
 
         if (!NetherPassportUtil.isPassport(item)) {

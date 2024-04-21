@@ -112,7 +112,7 @@ public class NetherPassportUtil {
 
     public static boolean isPermanentPassport(String item) {
         FileConfiguration config = plugin.getConfig();
-        String passport = config.getString("permanent-passport.id");
+        String passport = config.getString("permanent-passport-id");
         return passport.equalsIgnoreCase(item);
     }
 
