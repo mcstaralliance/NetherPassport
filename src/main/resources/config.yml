@@ -20,4 +20,4 @@ spawn:
   y: 64
   z: 0
 # 如果不需要启用永久下界通行证，填一个不存在的物品即可
-permanent-passport: 'KUBEJS_PERMANENT_PASSPORT'
+permanent-passport-id: 'KUBEJS_PERMANENT_PASSPORT'
