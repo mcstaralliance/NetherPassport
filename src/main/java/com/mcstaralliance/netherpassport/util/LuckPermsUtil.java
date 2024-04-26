@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class LuckPermsUtil {
     private static final LuckPerms api = NetherPassport.getLuckPermsApi();
 
-    public static void addTempPermission(Player player, String permission, long duration, TimeUnit timeUnit) {
+    public static void addPermission(Player player, String permission, long duration, TimeUnit timeUnit) {
         User user = api.getUserManager().getUser(player.getUniqueId());
         if (user != null) {
             Node node = Node.builder(permission)
@@ -22,6 +22,7 @@ public class LuckPermsUtil {
             api.getUserManager().saveUser(user);
         }
     }
+
     public static void addPermission(Player player, String permission) {
         User user = api.getUserManager().getUser(player.getUniqueId());
         if (user != null) {
@@ -31,6 +32,7 @@ public class LuckPermsUtil {
             api.getUserManager().saveUser(user);
         }
     }
+
     public static long getExpirationTime(Player player, String permission) {
         User user = api.getUserManager().getUser(player.getUniqueId());
         if (user != null) {

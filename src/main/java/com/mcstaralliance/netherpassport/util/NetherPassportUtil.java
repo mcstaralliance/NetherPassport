@@ -26,11 +26,11 @@ public class NetherPassportUtil {
         int method = config.getInt("usage.method");
         switch (method) {
             case 1:
-                LuckPermsUtil.addTempPermission(player, NETHER_PASSPORT_PERMISSION, 5, TimeUnit.MINUTES);
+                LuckPermsUtil.addPermission(player, NETHER_PASSPORT_PERMISSION, 5, TimeUnit.MINUTES);
                 break;
             case 2:
                 int time = config.getInt("usage.time");
-                LuckPermsUtil.addTempPermission(player, NETHER_PASSPORT_PERMISSION, time, TimeUnit.MINUTES);
+                LuckPermsUtil.addPermission(player, NETHER_PASSPORT_PERMISSION, time, TimeUnit.MINUTES);
                 break;
             default:
                 break;
