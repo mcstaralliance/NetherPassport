@@ -27,16 +27,17 @@ public class PlayerInteractListener implements Listener {
             return;
         }
         String item = event.getItem().getType().toString();
-
-        if (!NetherPassportUtil.isPassport(item)) {
-            return;
-        }
         if (NetherPassportUtil.isPermanentPassport(item)) {
             NetherPassportUtil.takeAwayPassport(player);
             LuckPermsUtil.addPermission(player, NetherPassportUtil.NETHER_PASSPORT_PERMISSION);
             NetherPassportUtil.transport(player);
             return;
         }
+
+        if (!NetherPassportUtil.isPassport(item)) {
+            return;
+        }
+
 
         NetherPassportUtil.takeAwayPassport(player);
         NetherPassportUtil.permitPlayer(player);
