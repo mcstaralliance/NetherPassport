@@ -79,6 +79,16 @@ public class NetherPassportUtil {
                 break;
         }
     }
+
+    public static void transport(Player player, boolean isPermanentPassport) {
+        if (!isPermanentPassport) {
+            return;
+        }
+        player.teleport(getNetherLocation());
+        String message = "永久下界通行证使用成功，你已被传送至下界。自此，你可以往返自然了。";
+        player.sendMessage(ChatColor.GREEN + message);
+
+    }
     public static String getFormattedTimeAfterMinutes(int minutes) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime newTime = LocalTime.now().plusMinutes(minutes);

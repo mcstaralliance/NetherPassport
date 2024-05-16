@@ -30,7 +30,7 @@ public class PlayerInteractListener implements Listener {
         if (NetherPassportUtil.isPermanentPassport(item)) {
             NetherPassportUtil.takeAwayPassport(player);
             LuckPermsUtil.addPermission(player, NetherPassportUtil.NETHER_PASSPORT_PERMISSION);
-            NetherPassportUtil.transport(player);
+            NetherPassportUtil.transport(player, true);
             return;
         }
 
